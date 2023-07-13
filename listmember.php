@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>List member</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <script src="/assets/js/bootstrap.js"></script>
@@ -14,6 +15,7 @@
 
 <body>
     <?php require_once('assets/pages/navbar.php'); ?>
+    <?php require_once('assets/pages/conn.php'); ?>
 
     <div class="container bg-info">
 
@@ -23,24 +25,57 @@
                     <tr>
                         <th scope="col">#ID</th>
                         <th scope="col">Username</th>
+                        <th scope="col">email</th>
                         <th scope="col">password</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                    $sql = "SELECT * FROM users";
+                    $result = mysqli_query($conn, $sql);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        // output data of each row
+                        while($row = mysqli_fetch_assoc($result)) {
+                          
+                        
+                      
+                      ?>
+
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Nontuch</td>
-                        <td>1234</td>
-                        <td><a class="btn btn-warning" href="#" role="button">Edit</a></td>
-                        <td><a class="btn btn-danger" href="#" role="button">Delete</a></td>
+                        <td><?Php echo $row["id"]  ?></td>
+                        <td><?Php echo $row["fullname"]  ?></td>
+                        <td><?Php echo $row["email"]  ?></td>
+                        <td><?Php echo $row["password"]  ?></td>
+
+
+                        <td>
+                            <form action="edit.php" method="post">
+                                <input type="hidden" name="idpost" id="" value="<?php echo$row["id"] ?>">
+                            <button type="submit" class="btn btn-warning">Edit</button>
+                            </form>
+                        </td>
+
+
+                        
+                        <td>
+                        <button href="edit.php" type="button" class="btn btn-danger">Delete</button>
+                        </td>
                     </tr>
+                    <?php 
+                    }
+                    } 
+                      mysqli_close($conn);
+                    ?>
                 </tbody>
             </table>
         </section>
 
     </div>
+
+
 </body>
 
 </html>

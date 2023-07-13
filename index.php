@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +18,16 @@
     
     <div class="container bg-info">
         <h1> Hello world </h1>
+        
+        <?php
+        
+        if(!isset($_SESSION['status'])){
+            echo '<h2>'.'ยังไม่ได้เข้าสู่ระบบ'.'</h2>';
+        }
+        else{
+            echo '<h2>'.'คุณเข้าสู่ระบบแล้ว'.'</h2>';
+        }
+        ?>
     </div>
 </body>
 
